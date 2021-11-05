@@ -9,4 +9,5 @@ close.addEventListener('click',toggleModal)
     modal.classList.toggle('is-open');
  }
 
+
 new WOW().init(); 

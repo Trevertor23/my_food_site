@@ -9,6 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/animate.css">
 </head>    
 <body>
     <div class="container">
@@ -18,10 +19,11 @@
             </a>
             <input type="text" class="input input-address" placeholder="Адрес доставки"/>
             <div class="buttons">
-                <button class="head_button button-primary">
+                <button class="head_button button-primary button-auth">
                     <img src="img/user.svg" alt="user" class="button-icon">
-                    <span class="button-text">Войти</span>
+                    <span class="button-text" id="login-text">Войти</span>
                 </button>
+                <span class="button-text"></span>
                 <button class="head_button">
                     <img src="img/shopping_cart.svg" class="button-icon">
                     <span class="button-text">Корзина</span>
@@ -183,5 +185,37 @@
             <!-- /.footer-block -->
         </div>
     </footer>
+    <div class="modal modal-auth animate__animated animate__fadeInUp">
+        <div class="modal-dialog">
+            <div class="modal-header">
+                <h3 class="modal-title">Авторизация</h3>
+                <button class="close" onclick="toogleModalAuth()">&times;</button>
+            </div>
+            <!-- /.modal-header -->
+            <div class="modal-body">
+                <div class="food-row">
+                    <span class="food-name">Логин:</span>
+                    <strong class="food-price"><input id="login"></strong>
+                    
+                </div>
+                <!-- /.foots-row -->
+                <div class="food-row">
+                    <span class="food-name">Пароль:</span>
+                    <strong class="food-price"><input type="password" id="password"></strong>
+                    
+                </div>
+                <!-- /.foots-row -->
+            </div>
+            <!-- /.modal-body -->
+            <div class="modal-footer">
+                <div class="footer-buttons">
+                    <button class="head_button button-primary button-login">Войти</button>
+                </div>
+            </div>
+            <!-- /.modal-footer -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <script src="js/main_ind.js"></script>
 </body>
 </html>
