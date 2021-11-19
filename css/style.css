@@ -36,6 +36,20 @@ header{
     width:300px;
     margin-left: auto;
 }
+.section-heading {
+    display: flex;
+    align-items: center;
+    margin-bottom: 44px;
+}
+.section-title {
+    font-style: normal;
+font-weight: bold;
+font-size: 36px;
+line-height: 42px;
+margin:0px;
+color: #000000;
+margin-right: 30px;
+}
 .head_button{
     padding:8 16 ;
     background: #FFFFFF;
@@ -111,11 +125,17 @@ margin-right: 10px;
     margin:0;
     margin-right: 30px;
 }
+.center{
+    text-align: center;
+}
 .cards{
     display:flex;
     align-items:flex-start;
     flex-wrap: wrap;
     justify-content: space-between;
+}
+.hide {
+    display: none;
 }
 .card{
     background: #FFFFFF;
@@ -417,6 +437,9 @@ margin-right: 10px;
         margin-top: 15px;
         flex: 1;
     }
+    .section-title {
+        font-size: 20px;
+    }
     .promo{
         background-image: none;
     }
@@ -455,6 +478,9 @@ margin-right: 10px;
    
 }
 @media (max-width: 480px){
+    .section-heading{
+        flex-wrap: wrap;
+    }
     .button-text{
         display:none;
     }
