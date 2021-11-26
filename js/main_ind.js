@@ -166,3 +166,13 @@ logo.addEventListener('click',function(){
         restaurants.classList.remove('hide');
         menu.classList.add('hide');
 })
+
+//slider
+
+new Swiper('.swiper-container',{
+    sliderPerView:1,
+    loop:true,
+    autoplay:true,
+    effect:'flip',
+    grabCursor:true,
+})
