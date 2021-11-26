@@ -8,6 +8,21 @@ const containerPromo = document.querySelector('.container-promo');
 const restaurants = document.querySelector('.restaurants');
 const menu = document.querySelector('.menu');
 const logo = document.querySelector('.logo');
+const restaurantHeading = document.querySelector('.restaurant-heading');
+let restaurantList;
+const getData = async function (url){
+    const response = await fetch(url)
+    if(!response.ok){
+        throw new Error(`Error! Address: ${url}. Status code: ${response.status}!`)
+    }
+    return await response.json();
+};
+
+getData('./db/partners.json').then(function(data){
+    data.forEach(createCardRestaurant)
+    restaurantsList = data;
+});
+
 let users = [
     {login:"trevertor23",password:"321654"},
     {login:"trevertor",password:"321654321"},
@@ -87,38 +102,49 @@ if(authData !== null)
 //     document.getElementById('login-text').innerText = login.login;  
 // }
 
-function createCardRestaurant(){
+function createCardRestaurant(restaurant){
+    console.log(restaurant);
+    const { 
+        image, 
+        kitchen, 
+        name, 
+        price, 
+        stars, 
+        products, 
+        time_of_delivery: timeOfDelivery } = restaurant;
     const card = `
-                <a class="card">
-                    <img src="img/image.jpg" alt="image" class="card-image" />
+                <a class="card" data-products="${products}">
+                    <img src="${image}" alt="image" class="card-image" />
                     <div class="card-text">
                         <div class="card-heading">
-                            <h3 class="card-title">Пицца плюс</h3>
-                            <span class="card-tag tag">50 мин</span>
+                            <h3 class="card-title">${name}</h3>
+                            <span class="card-tag tag">${timeOfDelivery} мин</span>
                         </div>
                         <div class="card-info">
-                            <div class="rating"><img src="img/rating.svg" alt="rating" class="rating-star" /> 4.5</div>
-                            <div class="price">от 900 у.е.</div>
-                            <div class="category">Пицца</div>
+                            <div class="rating"><img src="img/rating.svg" alt="rating" class="rating-star" /> ${stars}</div>
+                            <div class="price">от ${price} у.е.</div>
+                            <div class="category">${kitchen}</div>
                         </div>  
                     </div>
                 </a>
     `;
     cardsRestaurants.insertAdjacentHTML('beforeend',card)
 }
-function createCardGood() {
+function createCardGood(goods) {
+    const { description, id, image, name, price } = goods;
+
     const card = document.createElement('div');
     card.className = 'card animate__animated animate__fadeInUp animate__delay-1s center';
   
     card.insertAdjacentHTML('beforeend', `
-    <img src="img/tanuki2.png" alt="image" class="card-image" />
+    <img src="${image}" alt="image" class="card-image" />
     <div class="card-text">
         <div class="card-heading">
-            <h3 class="card-title card-title-reg">Калифорния лосось стандарт</h3>
+            <h3 class="card-title card-title-reg">${name}</h3>
         </div>
         <!-- /.card-heading -->
         <div class="card-info">
-            <div class="ingredients">Рис, лосось, авокадо, огурец, майонез, икра масаго, водоросли нори.</div>
+            <div class="ingredients">${description}</div>
         </div>
         <!-- /.card-info -->
         <div class="card-buttons">
@@ -128,7 +154,7 @@ function createCardGood() {
                     <img src="img/shopping-cart-white.svg" alt="shopping_cart" class="button-card-image">
                 </div>
             </button>
-            <strong class="card-price-bold">250 y.e.</strong>
+            <strong class="card-price-bold">${price} y.e.</strong>
         </div>
     </div>
     <!-- /.card-text -->
@@ -138,11 +164,11 @@ function createCardGood() {
     
   }
 
-createCardRestaurant();
+//createCardRestaurant();
 
 function openGoods(event){
     const target = event.target;
-
+    
     const restaurant = target.closest('.card');
     if(authStatus == true)
     {
@@ -151,16 +177,27 @@ function openGoods(event){
             restaurants.classList.add('hide');
             menu.classList.remove('hide');
             console.log('govnishe');
-            createCardGood();
-            createCardGood();
-            createCardGood();
+            getData(`./db/${restaurant.dataset.products}`).then(function(data){
+                data.forEach(createCardGood);
+            });
+            // restaurantHeading.innerHTML = `
+            // <h2 class="section-title restaurant-title">Пицца Плюс</h2>
+            // <div class="card-info">
+            //     <div class="rating">
+            //         4.5
+            //     </div>
+            //     <div class="price">От 900 ₽</div>
+            //     <div class="category">Пицца</div>
+            // </div>
+            // <!-- /.card-info -->`
+           
         }
     }
     else
         toogleModalAuth();
 }
 
-cardsRestaurants.addEventListener('click',openGoods)
+cardsRestaurants.addEventListener('click',openGoods);
 logo.addEventListener('click',function(){
         containerPromo.classList.remove('hide');
         restaurants.classList.remove('hide');
