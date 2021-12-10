@@ -5,10 +5,12 @@ let authStatus = JSON.parse(localStorage.getItem('authStatus'));
 let authData = JSON.parse(localStorage.getItem('authData'));
 const cardsRestaurants = document.querySelector('.cards-restaurants');
 const containerPromo = document.querySelector('.container-promo');
+const cardsMenu = document.querySelector('.cards-menu');
 const restaurants = document.querySelector('.restaurants');
 const menu = document.querySelector('.menu');
 const logo = document.querySelector('.logo');
 const restaurantHeading = document.querySelector('.restaurant-heading');
+const inputSearch = document.querySelector(".input-search");
 let restaurantList;
 const getData = async function (url){
     const response = await fetch(url)
@@ -203,7 +205,48 @@ logo.addEventListener('click',function(){
         restaurants.classList.remove('hide');
         menu.classList.add('hide');
 })
+function init(){
+    inputSearch.addEventListener('keypress', function (event) {
+        if (event.charCode === 13){
+            const value = event.target.value.trim();
+            if (!value){
+                event.target.style.backgroundColor = RED_COLOR;
+                event.target.value = '';
+                setTimeout(() =>{
+                    event.target.style.backgroundColor ='';
+                },1500)
+                return;
+            }
+            getData('./db/partners.json').then(function(data){
+                return data.map(function(partner){
+                    return partner.products;
+                });
+            }).then(function(linksProduct){
+                linksProduct.forEach(function(link){
+                    getData(`./db/${link}`)
+                    .then(function(data){
+                        const resultSearch = data.filter(function(item){
+                            const name = item.name.toLowerCase();
+                            return name.includes(value.toLowerCase());
+                        })
+                        cardsMenu.textContent = '';
+                        containerPromo.classList.add('hide');
+                        restaurants.classList.add('hide');
+                        menu.classList.remove('hide');
 
+                        document.querySelector('.section-title-1').textContent = 'Результаты по запросу: ';
+                        document.querySelector('.section-title-1').classList.add('show');
+
+                        resultSearch.forEach(createCardGood);
+
+                    })
+                });
+            })
+        }
+    })
+}
+
+init();
 //slider
 
 new Swiper('.swiper-container',{

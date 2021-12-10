@@ -43,12 +43,12 @@ header{
 }
 .section-title {
     font-style: normal;
-font-weight: bold;
-font-size: 36px;
-line-height: 42px;
-margin:0px;
-color: #000000;
-margin-right: 30px;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+    margin:0px;
+    color: #000000;
+    margin-right: 30px;
 }
 .head_button{
     padding:8 16 ;
@@ -64,12 +64,15 @@ margin-right: 30px;
 .buttons{
     display:flex;
     align-items: center;
-
 }
+
 .button-primary{
     background: #1890ff;
     color: #fff;
     margin-right: 10px;
+}
+.section-title-1{
+    display:none;
 }
 .button-icon{
     margin-right: 6px;
@@ -362,6 +365,9 @@ margin-right: 10px;
     padding:15px 20px;
     font-size: 20px;
     line-height: 23px;
+}
+.show{
+    display:block;
 }
 @media (max-width:1366px){
     .container{
